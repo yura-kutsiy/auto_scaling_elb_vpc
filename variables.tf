@@ -4,6 +4,9 @@ variable "region" {
 variable "instance_type" {
   default = "t2.micro"
 }
+variable "pair_key" {
+  default = "key"
+}
 variable "allow_ports" {
   description = "List of open ports"
   default     = ["80", "443", "22"]

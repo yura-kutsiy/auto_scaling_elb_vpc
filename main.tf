@@ -44,7 +44,7 @@ resource "aws_launch_configuration" "server" {
   instance_type   = var.instance_type
   security_groups = [aws_security_group.server.id]
   user_data       = file("server.sh")
-  key_name        = "aws-key-Frankfurt"
+  key_name        = var.pair_key
 
   associate_public_ip_address = true
 
@@ -64,8 +64,7 @@ resource "aws_autoscaling_group" "server" {
   launch_configuration = aws_launch_configuration.server.id
   load_balancers       = [aws_elb.server.name]
   health_check_type    = "ELB"
-  #health_check_grace_period = 300
-  vpc_zone_identifier = [aws_subnet.subnet_a.id, aws_subnet.subnet_b.id]
+  vpc_zone_identifier  = [aws_subnet.subnet_a.id, aws_subnet.subnet_b.id]
 
   enabled_metrics = [
     "GroupMinSize",
